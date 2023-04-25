@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Portfolio</title>
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="gitignore/transition-page.css" />
+		<link rel="stylesheet" href="gitignore/shared-styles" />
+	</head>
+	<body>
+		<div class="top-half">
+			<div class="top-half-content">
+				<h3>Check your address bar</h3>
+				<p>Beware of phishing! <br class="mobile-break" />Make sure your link starts with sleepz1312.github.io</p>
+				<p id="url">You will be redirected in <span id="countdown-seconds">0</span> second<span id="s">s</span></p>
+				<img id="spinner" src="gitignore/spinner.gif" alt="loading" />
+				<p></p>
+				<div class="browser-image" style="background-image: url('gitignore/browser.svg')">
+					<div class="links links-gov">sleepz1312.github.io</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			function getRandomHex() {
+				// Generate a random number between 0 and 255
+				var r = Math.floor(Math.random() * 150);
+				var g = Math.floor(Math.random() * 150);
+				var b = Math.floor(Math.random() * 150);
+
+				// Convert the numbers to hexadecimal strings
+				var hexR = r.toString(16);
+				var hexG = g.toString(16);
+				var hexB = b.toString(16);
+
+				// Pad the strings with leading zeros if necessary
+				hexR = pad(hexR);
+				hexG = pad(hexG);
+				hexB = pad(hexB);
+
+				// Concatenate the strings and return the result
+				return "#" + hexR + hexG + hexB;
+			}
+
+			function pad(hex) {
+				// If the string is one character long, pad it with a leading zero
+				return hex.length === 1 ? "0" + hex : hex;
+			}
+
+			function updateRainbow() {
+				var r = document.querySelector(".top-half");
+				var oldColor = randomColor;
+				var randomColor = getRandomHex();
+				r.style.backgroundColor = getRandomHex();
+			}
+
+			var currentURL = "https://sleepz1312.github.io/portfolio/404";
+
+			function handleClick() {
+				window.location.href = currentURL;
+			}
+
+			document.addEventListener("click", handleClick);
+
+			var countdown = 1;
+			// Set an interval to update the countdown timer every second
+			var interval = setInterval(function () {
+				updateRainbow();
+				// Decrement the countdown variable
+				countdown--;
+				// Get the countdown element
+				var countElement = document.getElementById("countdown-seconds");
+				// Update the countdown element with the current countdown value
+				countElement.textContent = countdown;
+				// If the countdown has reached 0, stop the interval and reset the countdown
+				if (countdown === 0) {
+					clearInterval(interval);
+					countdown = 6;
+					window.location.href = currentURL;
+				}
+			}, 1000);
+		</script>
+	</body>
+</html>
